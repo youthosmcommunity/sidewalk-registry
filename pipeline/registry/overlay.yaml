@@ -1,0 +1,29 @@
+# Hand-maintained additions to the registry that can't be computed from the
+# data itself: narrative text explaining gaps, and any manual corrections to
+# StatCan's source metadata.
+
+gap_narrative:
+  pe: >
+    No municipality in Prince Edward Island has published open pedestrian
+    infrastructure data that Statistics Canada's 2023-2024 harvest could
+    find. This doesn't mean none exists -- it means nobody has confirmed it
+    publicly yet.
+  nl: >
+    No municipality in Newfoundland and Labrador has published open
+    pedestrian infrastructure data that Statistics Canada's 2023-2024
+    harvest could find.
+  yt: >
+    No municipality in Yukon has published open pedestrian infrastructure
+    data that Statistics Canada's 2023-2024 harvest could find.
+  nt: >
+    No municipality in the Northwest Territories has published open
+    pedestrian infrastructure data that Statistics Canada's 2023-2024
+    harvest could find.
+  nu: >
+    No municipality in Nunavut has published open pedestrian infrastructure
+    data that Statistics Canada's 2023-2024 harvest could find.
+
+# Keyed by "{province_code}/{municipality_slug}". Empty for now -- StatCan's
+# data_sources.csv already carries source_url/licence_url/attribution per
+# source file, so this is only for corrections discovered later.
+municipality_overrides: {}

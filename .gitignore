@@ -1,0 +1,24 @@
+# Node / Next.js
+web/node_modules/
+web/.next/
+web/out/
+web/.vercel/
+*.log
+npm-debug.log*
+
+# Python
+pipeline/.venv/
+pipeline/__pycache__/
+**/__pycache__/
+*.pyc
+pipeline/data/
+
+# OS
+.DS_Store
+
+# Env
+.env
+.env.local
+
+# Local tool state
+.claude/

@@ -1,0 +1,52 @@
+name: ETL
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tippecanoe
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqlite3-dev zlib1g-dev
+          git clone --depth 1 https://github.com/felt/tippecanoe.git /tmp/tippecanoe
+          make -C /tmp/tippecanoe -j"$(nproc)"
+          sudo make -C /tmp/tippecanoe install
+
+      - name: Install pmtiles CLI
+        run: |
+          curl -sL -o /tmp/pmtiles.tar.gz \
+            https://github.com/protomaps/go-pmtiles/releases/download/v1.30.3/go-pmtiles-1.30.3_Linux_x86_64.tar.gz
+          tar -xzf /tmp/pmtiles.tar.gz -C /tmp
+          sudo mv /tmp/pmtiles /usr/local/bin/pmtiles
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Run pipeline
+        working-directory: pipeline
+        run: uv run python -m sidewalk_pipeline.cli run-all
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+
+      - name: Commit updated registry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add web/public/registry/sources.json pipeline/registry/generated_sources.json
+          git diff --cached --quiet || git commit -m "Update pedestrian network registry"
+          git push
+
+      - name: Trigger Vercel deploy
+        if: ${{ env.VERCEL_DEPLOY_HOOK_URL != '' }}
+        run: curl -X POST "$VERCEL_DEPLOY_HOOK_URL"
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
