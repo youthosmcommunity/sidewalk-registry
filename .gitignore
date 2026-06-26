@@ -12,6 +12,7 @@ pipeline/__pycache__/
 **/__pycache__/
 *.pyc
 pipeline/data/
+pipeline/registry/generated_sources.json
 
 # OS
 .DS_Store
