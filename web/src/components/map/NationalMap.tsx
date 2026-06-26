@@ -9,12 +9,15 @@ import { CATEGORY_COLORS, CATEGORY_LABELS, CATEGORY_SLUGS } from "@/lib/categori
 const PMTILES_URL =
   process.env.NEXT_PUBLIC_PMTILES_URL ?? "http://localhost:8765/national.pmtiles";
 
-const LINE_COLOR_EXPRESSION: maplibregl.ExpressionSpecification = [
+// Built dynamically from CATEGORY_SLUGS, so its tuple shape can't be
+// statically verified against MapLibre's strict ExpressionSpecification
+// type -- it's valid GL JS expression JSON at runtime regardless.
+const LINE_COLOR_EXPRESSION = [
   "match",
   ["get", "category"],
   ...CATEGORY_SLUGS.flatMap((slug) => [slug, CATEGORY_COLORS[slug]]),
   "#6b7280",
-];
+] as unknown as maplibregl.ExpressionSpecification;
 
 export function NationalMap() {
   const containerRef = useRef<HTMLDivElement>(null);

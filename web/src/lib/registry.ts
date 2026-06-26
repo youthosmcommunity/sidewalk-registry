@@ -1,7 +1,10 @@
 import rawRegistry from "../../public/registry/sources.json";
 import type { MunicipalityEntry, Registry } from "./types";
 
-export const registry = rawRegistry as Registry;
+// TypeScript infers an overly precise literal type per JSON object (e.g.
+// category_counts keys vary per municipality), so it won't structurally
+// match Record<string, number> directly -- go through unknown first.
+export const registry = rawRegistry as unknown as Registry;
 
 export function municipalitySlug(m: MunicipalityEntry): string {
   return `${m.province_code}/${m.municipality_slug}`;
