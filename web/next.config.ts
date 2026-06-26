@@ -6,10 +6,12 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   // Avoids Next.js inferring the wrong workspace root from an unrelated
-  // package-lock.json elsewhere on this machine.
+  // package-lock.json elsewhere on this machine. Both must match or Next
+  // warns and prefers outputFileTracingRoot.
   turbopack: {
     root: __dirname,
   },
+  outputFileTracingRoot: __dirname,
 };
 
 export default nextConfig;
