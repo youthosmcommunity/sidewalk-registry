@@ -1,7 +1,6 @@
-"""Upload heavy derived artifacts (PMTiles, GeoParquet, FlatGeobuf) to Vercel
-Blob. Shells out to upload-blob.mjs (the official @vercel/blob SDK) rather
-than hand-rolling Vercel Blob's HTTP contract, which isn't published as a
-stable public spec.
+"""Upload heavy derived artifacts (PMTiles, GeoParquet) to Vercel Blob. Shells
+out to upload-blob.mjs (the official @vercel/blob SDK) rather than hand-rolling
+Vercel Blob's HTTP contract, which isn't published as a stable public spec.
 """
 
 from __future__ import annotations
