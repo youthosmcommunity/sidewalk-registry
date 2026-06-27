@@ -21,7 +21,7 @@ CPND_URL = "https://www150.statcan.gc.ca/n1/pub/34-26-0004/2025001/zip/canadian_
 MIN_EXPECTED_SIZE_BYTES = 50_000_000  # the real file is ~130MB; fail loudly if far smaller
 ZIP_MAGIC_BYTES = b"PK"
 
-DATA_DIR = Path(__file__).resolve().parents[3] / "data"
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 
 def download_cpnd_zip(dest_dir: Path = DATA_DIR) -> Path:
