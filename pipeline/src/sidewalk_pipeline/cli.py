@@ -23,7 +23,7 @@ from sidewalk_pipeline import export_tiles, export_vector, fetch, normalize, reg
 
 logger = logging.getLogger(__name__)
 
-PIPELINE_ROOT = Path(__file__).resolve().parents[3]
+PIPELINE_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PIPELINE_ROOT / "data"
 OUTPUT_DIR = DATA_DIR / "output"
 TMP_DIR = DATA_DIR / "tmp"

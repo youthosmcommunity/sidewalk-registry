@@ -14,7 +14,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-UPLOAD_DIR = Path(__file__).resolve().parents[3] / "upload"
+UPLOAD_DIR = Path(__file__).resolve().parents[2] / "upload"
 UPLOAD_SCRIPT = UPLOAD_DIR / "upload-blob.mjs"
 
 
