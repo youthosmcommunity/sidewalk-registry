@@ -3,8 +3,9 @@ import type { MunicipalityEntry } from "./types";
 
 // Mirrors the artifact key naming in pipeline/src/sidewalk_pipeline/cli.py's
 // run_all() -- these are the keys registry.artifact_urls is populated with
-// once a real pipeline run uploads to Vercel Blob.
-export const FORMATS = ["parquet", "fgb"] as const;
+// once a real pipeline run uploads to Vercel Blob. Parquet only: FlatGeobuf
+// was dropped to fit Vercel Blob's 1GB Hobby quota (see export_vector.py).
+export const FORMATS = ["parquet"] as const;
 
 export function nationalKey(format: string): string {
   return `downloads/national.${format}`;

@@ -1,6 +1,5 @@
 const FORMAT_LABELS: Record<string, string> = {
   parquet: "GeoParquet",
-  fgb: "FlatGeobuf",
   pmtiles: "PMTiles",
 };
 

@@ -39,6 +39,14 @@ def run_all(skip_upload: bool = False, skip_tiles: bool = False) -> None:
 
     artifacts: dict[str, Path] = {}
 
+    # Build + register the PMTiles first so it's the first thing uploaded.
+    # The map can't render without it, but the per-municipality download files
+    # can -- so if an upload ever fails partway (e.g. Blob quota), we want the
+    # map-critical artifact to have already landed rather than be last in line.
+    if not skip_tiles:
+        tiles_path = export_tiles.export_tiles(gdf, OUTPUT_DIR / "tiles" / "national.pmtiles", TMP_DIR)
+        artifacts["tiles/national.pmtiles"] = tiles_path
+
     national_files = export_vector.export_scope(gdf, OUTPUT_DIR / "national", "national")
     for fmt, path in national_files.items():
         artifacts[f"downloads/national.{fmt}"] = path
@@ -54,10 +62,6 @@ def run_all(skip_upload: bool = False, skip_tiles: bool = False) -> None:
         )
         for fmt, path in files.items():
             artifacts[f"downloads/municipalities/{province_code}/{municipality_slug}.{fmt}"] = path
-
-    if not skip_tiles:
-        tiles_path = export_tiles.export_tiles(gdf, OUTPUT_DIR / "tiles" / "national.pmtiles", TMP_DIR)
-        artifacts["tiles/national.pmtiles"] = tiles_path
 
     registry = registry_build.build_registry(gdf, data_sources_csv)
 
